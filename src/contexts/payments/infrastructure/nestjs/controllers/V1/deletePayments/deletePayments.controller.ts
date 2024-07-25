@@ -1,15 +1,10 @@
-import {
-  BadRequestException,
-  ConflictException,
-  Controller,
-  Delete,
-  HttpStatus,
-  Param,
-} from '@nestjs/common';
+import { Controller, HttpStatus } from '@nestjs/common';
 import { V1_ROUTES } from '../../routes';
 import { DeletePaymentService } from 'src/contexts/payments/application/deletePayment/deletePayment.service';
 import { ErrorDeletePaymentException } from 'src/contexts/payments/domain/errors/errorDeletePayment.exception';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { MessagePattern, Payload, RpcException } from '@nestjs/microservices';
+import { DeletePaymentDto } from './deletePayments.dto';
 
 @ApiTags(V1_ROUTES.NAME)
 @Controller(V1_ROUTES.BASE)
@@ -20,15 +15,15 @@ export class DeletePaymentController {
     status: HttpStatus.OK,
     description: 'Se elimino el pago correctamente',
   })
-  @Delete(V1_ROUTES.USER.DELETE)
-  async deletePayment(@Param('id') id: string) {
+  @MessagePattern('delete_payment')
+  async deletePayment(@Payload() data: DeletePaymentDto) {
     try {
-      return await this.deletePaymentService.run({ id });
+      return await this.deletePaymentService.run(data);
     } catch (error) {
       if (error instanceof ErrorDeletePaymentException) {
-        throw new BadRequestException(error.message);
+        throw new RpcException(error.message);
       }
-      throw new ConflictException('Conflict on delete payment');
+      throw new RpcException('Conflict on delete payment');
     }
   }
 }

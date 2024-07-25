@@ -3,7 +3,7 @@ export interface PrimitivePayment {
   amount: number;
   status?: string;
   products: Product[];
-  userId: string;
+  user: User;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -15,6 +15,21 @@ interface Product {
   stock?: number;
   imgUrl?: string;
   category?: string;
+}
+interface User {
+  id: string;
+  name?: string;
+  email?: string;
+  username?: string;
+  password?: string;
+  phone?: number;
+  country?: string;
+  address?: string;
+  city?: string;
+  role?: string;
+  birthdate?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export class Payment {

@@ -1,5 +1,6 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { envs } from './envs';
+import { Payment } from 'src/contexts/payments/infrastructure/typeorm/payment.entitie';
 
 export const config = {
   type: 'mysql',
@@ -8,6 +9,6 @@ export const config = {
   username: envs.MYSQL_USER,
   password: envs.MYSQL_PASSWORD,
   database: envs.MYSQL_DATABASE,
-  entities: [],
+  entities: [Payment],
   synchronize: true,
 } as TypeOrmModuleOptions;
