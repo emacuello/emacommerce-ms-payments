@@ -12,7 +12,7 @@ export class GetOnePaymentController {
   constructor(private readonly getOnePaymentService: FindOnePaymentService) {}
 
   @ApiOperation({ summary: 'Obtener un pago por id' })
-  @MessagePattern('get_payment')
+  @MessagePattern('get.payment')
   async getOnePayment(@Payload() data: GetOnePaymentDto) {
     try {
       return await this.getOnePaymentService.run(data);

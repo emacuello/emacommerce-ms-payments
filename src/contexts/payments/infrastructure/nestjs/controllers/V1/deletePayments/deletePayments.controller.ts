@@ -15,7 +15,7 @@ export class DeletePaymentController {
     status: HttpStatus.OK,
     description: 'Se elimino el pago correctamente',
   })
-  @MessagePattern('delete_payment')
+  @MessagePattern('delete.payment')
   async deletePayment(@Payload() data: DeletePaymentDto) {
     try {
       return await this.deletePaymentService.run(data);

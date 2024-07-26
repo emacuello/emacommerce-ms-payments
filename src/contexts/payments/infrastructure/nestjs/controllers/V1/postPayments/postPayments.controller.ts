@@ -16,7 +16,7 @@ export class PostPaymentsController {
     status: HttpStatus.CREATED,
     description: 'Pago creado correctamente',
   })
-  @MessagePattern('create_payment')
+  @MessagePattern('create.payment')
   async createPayment(@Payload() body: PostPaymentsDto) {
     try {
       return await this.createPaymentService.run(body);
