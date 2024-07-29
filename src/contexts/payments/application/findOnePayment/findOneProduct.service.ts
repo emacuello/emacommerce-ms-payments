@@ -8,8 +8,8 @@ import { FindOnePaymentDto } from './findOnePayment.dto';
 export class FindOnePaymentService {
   constructor(private readonly paymentRepository: PaymentsRepository) {}
   async run({ id }: FindOnePaymentDto): Promise<PrimitivePayment> {
-    const payment = await this.paymentRepository.findById(id);
+    const payment = (await this.paymentRepository.findById(id)).toValue();
     if (!payment) throw new NotFoundPaymentException('Payment not found');
-    return payment.toValue();
+    return payment;
   }
 }

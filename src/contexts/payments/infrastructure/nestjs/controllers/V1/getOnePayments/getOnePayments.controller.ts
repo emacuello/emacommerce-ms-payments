@@ -15,12 +15,13 @@ export class GetOnePaymentController {
   @MessagePattern('get.payment')
   async getOnePayment(@Payload() data: GetOnePaymentDto) {
     try {
-      return await this.getOnePaymentService.run(data);
+      // Por alguna razon, sin el JSON.stringify, no se puede devolver el objeto, mientras que en el getAll no es necesario usarlo 🤔
+      return JSON.stringify(await this.getOnePaymentService.run(data));
     } catch (error) {
       if (error instanceof NotFoundPaymentException) {
-        throw new RpcException(error.message);
+        throw new RpcException(JSON.stringify(error.message));
       }
-      throw new RpcException('Error on get one payment');
+      throw new RpcException(JSON.stringify('Error on get one payment'));
     }
   }
 }

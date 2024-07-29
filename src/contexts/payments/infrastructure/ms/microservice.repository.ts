@@ -27,15 +27,18 @@ export class MicroserviceRepository extends PaymentsRepository {
     super();
   }
   async save(payment: Payment): Promise<string> {
-    const user = this.usersClient.send('getOne', {
+    const user = this.usersClient.send('findUserById', {
       id: payment.toValue().user.id,
     });
+
     const products = this.productClient.send('getManyProducts', {
       ids: payment.toValue().products,
     });
     try {
       const userdb = (await firstValueFrom(user)) as UserTypeORM;
+
       const productsdb = (await firstValueFrom(products)) as ProductTypeORM[];
+
       await this.paymentsRepository.save({
         amount: payment.amount,
         user: userdb,
