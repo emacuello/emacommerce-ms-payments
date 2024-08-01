@@ -1,0 +1,6 @@
+services:
+  payments-ms:
+    build: .
+    env_file:
+      - .env
+
